@@ -2,6 +2,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 
 // Local
 const commentsRouter = require('./routes/api/comments');
@@ -12,6 +13,9 @@ const app = express();
 // app.get('/', (req, res) => {
 //   res.sendfile(path.join(__dirname, 'public', 'index.html'));
 // });
+
+// cors middleware
+app.use(cors());
 
 // logger middleware
 // app.use(logger);
