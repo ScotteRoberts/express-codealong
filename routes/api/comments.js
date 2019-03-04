@@ -47,7 +47,10 @@ router.post('/', (req, res) => {
       .push(newComment)
       .write();
     // return all the comments (make sure new comment is included)
-    res.status(201).json({ msg: 'Comment successfully added', comments: db.get('comments').value() });
+    res.status(201).json({
+      msg: 'Comment successfully added',
+      comments: db.get('comments').value(),
+    });
   } else {
     // Bonus: if request has no body text (or text is empty) send proper response codes and maybe a message.
     res.status(400).json({ msg: 'Invalid message: please provide comment text' });
@@ -56,7 +59,9 @@ router.post('/', (req, res) => {
 
 // update a comment
 router.patch('/:id', (req, res) => {
-  if (!req.body.text) return res.status(400).json({ msg: 'Invalid message: please provide comment text' });
+  if (!req.body.text) {
+    return res.status(400).json({ msg: 'Invalid message: please provide comment text' });
+  }
 
   // Check if the db has a comment with the id of req.params.id
   if (
@@ -92,7 +97,10 @@ router.delete('/:id', (req, res) => {
     .remove({ id: req.params.id })
     .write();
 
-  res.status(200).json({ msg: 'Comment successfully deleted', comments: db.get('comments').value() });
+  res.status(200).json({
+    msg: 'Comment successfully deleted',
+    comments: db.get('comments').value(),
+  });
 });
 
 module.exports = router;
