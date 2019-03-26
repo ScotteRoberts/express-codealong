@@ -4,6 +4,7 @@ const shortid = require('shortid');
 const lowdb = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const commentData = require('../../data');
+const Comment = require('../../models/comment.model');
 
 // create the db file if it doesn't exist
 // seed the db with data.
@@ -17,14 +18,18 @@ const router = express.Router();
 
 // get all comments
 router.get('/', (req, res) => {
-  let comments = db.get('comments').value();
-  if (req.query.filter) {
-    const filterText = req.query.filter;
-    comments = comments.filter(comment =>
-      comment.text.toLowerCase().includes(filterText.toLowerCase())
-    );
-  }
-  res.json(comments);
+  // let comments = db.get('comments').value();
+  // if (req.query.filter) {
+  //   const filterText = req.query.filter;
+  //   comments = comments.filter(comment =>
+  //     comment.text.toLowerCase().includes(filterText.toLowerCase())
+  //   );
+  // }
+  // res.json(comments);
+  Comment.find()
+    .where('text')
+    .regex(req.query.filter || '')
+    .then(comments => res.json(comments));
 });
 
 // get single comment

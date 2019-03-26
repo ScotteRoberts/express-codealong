@@ -3,10 +3,17 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 // Local
 const commentsRouter = require('./routes/api/comments');
-const logger = require('./middleware/logger');
+
+mongoose.connect(
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${
+    process.env.DB_HOST
+  }/message-board?retryWrites=true`,
+  { useNewUrlParser: true }
+);
 
 const app = express();
 
